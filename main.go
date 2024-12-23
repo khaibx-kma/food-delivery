@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
@@ -48,16 +49,24 @@ func main() {
 	//
 	//log.Fatalln(n)
 
-	var myNote MyNote
-	myNote.Name = "haha1"
+	//var myNote MyNote
+	//myNote.Name = "haha1"
+	//
+	//if err := db.Where(myNote).
+	//	First(&myNote).
+	//	Error; err != nil {
+	//	log.Println("Note NOT FOUND!")
+	//}
+	//
+	//log.Println(myNote)
 
-	if err := db.Where(myNote).
-		First(&myNote).
-		Error; err != nil {
-		log.Println("Note NOT FOUND!")
-	}
-
-	log.Println(myNote)
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	r.Run("0.0.0.0:7000") // listen and serve on 0.0.0.0:8080
 }
 
 //TIP See GoLand help at <a href="https://www.jetbrains.com/help/go/">jetbrains.com/help/go/</a>.
